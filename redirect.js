@@ -1,23 +1,18 @@
 const regex = /(?:((https?):\/\/)(.{2})(?:\.m)\.wikipedia\.org\/(wiki\/.*))/gm;
-const str = window.location;
+// dont really have a reason to use let instead of var but whatever
 let m;
 let language;
 let article;
 let protocol;
-
-while ((m = regex.exec(str)) !== null) {
-	// This is necessary to avoid infinite loops with zero-width matches
-	if (m.index === regex.lastIndex) {
-		regex.lastIndex++;
-	}
-	// The result can be accessed through the `m`-variable.
-	language = m[3];
-	article = m[4];
-	protocol = m[2]
-}
-
+// code inspired by regex101's code generator
+m = regex.exec(window.location);
+// these are useful. dont remember why im doing protocol matching but whatever
+protocol = m[2];
+language = m[3];
+article = m[4];
+// debugging purposes
+console.log(protocol);
 console.log(language);
 console.log(article);
-console.log(protocol);
-
+// sets the location
 window.location = `${protocol}://${language}.wikipedia.org/${article}`
